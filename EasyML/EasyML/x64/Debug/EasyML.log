@@ -1,0 +1,6 @@
+﻿  testMatrixManipulate.cpp
+d:\codes\easyml\easyml\include\common\linearalgebratools_imple.h(119): warning C4244: “+=”: 从“float”转换到“int”，可能丢失数据
+  d:\codes\easyml\easyml\include\common\testmatrixmanipulate.cpp(26): note: 参见对正在编译的函数 模板 实例化“void MatrixMultiply<float>(Matrix<float> *,Matrix<float> *,Matrix<float> *)”的引用
+d:\codes\easyml\easyml\include\common\linearalgebratools_imple.h(123): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+  EasyML.vcxproj -> D:\Codes\EasyML\EasyML\x64\Debug\EasyML.exe
+  EasyML.vcxproj -> D:\Codes\EasyML\EasyML\x64\Debug\EasyML.pdb (Full PDB)

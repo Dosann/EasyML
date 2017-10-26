@@ -1,4 +1,5 @@
-#include "LinearAlgebraTools.h"
+#include "common/LinearAlgebraTools.h"
+//#include "LinearAlgebraTools.cpp"
 #include <iostream>
 
 int main()
@@ -15,6 +16,24 @@ int main()
 	ScalarAdd(&C, &A, &B);
 	printf("æÿ’ÛC: \n");
 	PrintMatrix(&C);
+
+	Matrix<float> D;
+	ScalarSubtract(&D, &A, &B);
+	printf("æÿ’ÛD: \n");
+	PrintMatrix(&D);
+
+	Matrix<float> E;
+	MatrixMultiply(&E, &A, &B);
+	printf("æÿ’ÛE: \n");
+	PrintMatrix(&E);
+
+	int b = 10;
+	Matrix<float>* F = A * b;
+	printf("æÿ’ÛF: \n");
+	PrintMatrix(F);
+	F = b * A;
+	printf("æÿ’ÛF: \n");
+	PrintMatrix(F);
 
 	std::cin.get();
 }
