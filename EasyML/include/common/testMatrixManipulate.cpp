@@ -3,11 +3,18 @@
 
 int main()
 {
-	float A[3][3] = { {1,2,3}, {2,4,6}, {7,4,1} };
-	float B[3][3] = { {7,6,5}, {5,4,3}, {1,7,13} };
-	float C[3][3];
-	PrintMatrixFloat(A);
-	PrintMatrixFloat(B);
+	float Adata[9] = { 1,2,3, 2,4,6, 7,4,1 };
+	Matrix<float> A(Adata, 3, 3);
+	float Bdata[9] = { 7,6,5, 5,4,3, 1,7,13 };
+	Matrix<float> B(Bdata, 3, 3);
+	Matrix<float> C;
+	printf("æÿ’ÛA: \n");
+	PrintMatrix(&A);
+	printf("æÿ’ÛB: \n");
+	PrintMatrix(&B);
+	ScalarAdd(&C, &A, &B);
+	printf("æÿ’ÛC: \n");
+	PrintMatrix(&C);
 
 	std::cin.get();
 }

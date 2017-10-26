@@ -1,86 +1,39 @@
 #include "LinearAlgebraTools.h"
 
-template<T>
-int* GetMatrixSize(T[][] A){
-	int width, height, total;
-	total = sizeof(A) / sizeof(T);
-	width = sizeof(A[0]) / sizeof(T);
-	height = total / width;
-	return{ height, width };
-}
-
-template<T>
-void ScalarAdd(T[][] out, T[][] A, T[][] B){
-	int* asize = GetMatrixSize(A);
-	int* bsize = GetMatrixSize(B);
-	if (asize[0] != bsize[0] || asize[1] != bsize[1]) {
-		printf("Error when adding two matrix(%d by %d, %d by %d): dimension not matched!\n", asize[0], asize[1], bsize[0], bsize[1]);
-		return;
-	}
-	out = new T[asize[0]][asize[1]];
-	for (int height = 0; height < asize[0]; height++) {
-		for (int width = 0; width < asize[1]; width++) {
-			out[height][width] = A[height][width] + B[height][width];
-		}
-	}
-}
-
-template<T>
-void ScalarSubtract(T[][] out, T[][] A, T[][] B)
-{
-	int* asize = GetMatrixSize(A);
-	int* bsize = GetMatrixSize(B);
-	if (asize[0] != bsize[0] || asize[1] != bsize[1]) {
-		printf("Error when substracting two matrix(%d by %d, %d by %d): dimension not matched!\n", asize[0], asize[1], bsize[0], bsize[1]);
-		return;
-	}
-	out = new T[asize[0]][asize[1]];
-	for (int height = 0; height < asize[0]; height++) {
-		for (int width = 0; width < asize[1]; width++) {
-			out[height][width] = A[height][width] - B[height][width];
-		}
-	}
-}
-
-template<T>
-void ScalarMultiply(T[][] out, T[][] A, T[][] B)
-{
-	int* asize = GetMatrixSize(A);
-	int* bsize = GetMatrixSize(B);
-	if (asize[1] != bsize[0]) {
-		printf("Error when multiplying two matrix(%d by %d, %d by %d): dimension not matched!\n", asize[0], asize[1], bsize[0], bsize[1]);
-		return;
-	}
-	out = new T[asize[0]][bsize[1]];
-	for (int height = 0; height < asize[0]; height++) {
-		for (int width = 0; width < bsize[1]; width++) {
-			int temp = 0;
-			for (int i = 0; i < asize[1]; i++) {
-				temp += A[height][i] * B[i][width];
-			}
-			out[height][width] = temp;
-		}
-	}
-}
-
-void PrintMatrixInt(int[][] A)
-{
-	int* asize = GetMatrixSize(A);
-	for (int height = 0; height < asize[0]; height++) {
-		for (int width = 0; width < asize[1]; width++) {
-			printf("%d\t", A[height][width])
+void PrintMatrix(Matrix<float>* A) {
+	int offset = 0;
+	for (int h = 0; h < A->height; h++) {
+		for (int w = 0; w < A->width; w++) {
+			printf("%f\t", A->matrix[offset]);
+			offset++;
 		}
 		printf("\n");
 	}
 }
 
-void PrintMatrixFloat(float[][] A)
-{
-	int* asize = GetMatrixSize(A);
-	for (int height = 0; height < asize[0]; height++) {
-		for (int width = 0; width < asize[1]; width++) {
-			printf("%f\t", A[height][width])
+void PrintMatrix(Matrix<int>* A) {
+	int offset = 0;
+	for (int h = 0; h < A->height; h++) {
+		for (int w = 0; w < A->width; w++) {
+			printf("%d\t", A->matrix[offset]);
+			offset++;
 		}
 		printf("\n");
+	}
+}
+
+template<typename T>
+void ScalarAdd(Matrix<T>* out, Matrix<T>* A, Matrix<T>* B) {
+	if (A->height != B->height || A->width != B->width) {
+		printf("Error when adding two matrices: dimension not matched(%d by %d, %d by %d)\n", A->height, A->width, B->height, B->width);
+		return;
+	}
+	out->init(A->height, A->width);
+	int offset = 0;
+	for (int h = 0; h < A->height; h++) {
+		for (int w = 0; w < A->width; w++) {
+			out->matrix[offset] = A->matrix[offset] + B->matrix[offset];
+			offset++;
+		}
 	}
 }

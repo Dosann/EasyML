@@ -1,0 +1,5 @@
+﻿  testMatrixManipulate.cpp
+  LinearAlgebraTools.cpp
+  正在生成代码...
+testMatrixManipulate.obj : error LNK2019: 无法解析的外部符号 "void __cdecl ScalarAdd<float>(class Matrix<float> *,class Matrix<float> *,class Matrix<float> *)" (??$ScalarAdd@M@@YAXPAV?$Matrix@M@@00@Z)，该符号在函数 _main 中被引用
+C:\MY\code\EasyML\EasyML\Debug\EasyML.exe : fatal error LNK1120: 1 个无法解析的外部命令
