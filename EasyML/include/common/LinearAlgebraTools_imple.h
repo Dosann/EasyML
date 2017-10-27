@@ -2,11 +2,137 @@
 
 #include "LinearAlgebraTools.h"
 
-template<class T>
-Matrix<T>::Matrix() {};
+#pragma region
+template<class T> Vector<T>::Vector() {};
 
-template<class T>
-Matrix<T>::Matrix(T* data, int h, int w) {
+template<class T> Vector<T>::Vector(T* data, int l) {
+	len = l;
+	vector = new T[len];
+	for (int i = 0; i < len; i++) {
+		vector[i] = data[i];
+	}
+}
+template<class T> Vector<T>::Vector(T* data, int l, VecDirection dir) {
+	len = l;
+	vector = new T[len];
+	for (int i = 0; i < len; i++) {
+		vector[i] = data[i];
+	}
+	vecd = dir;
+}
+template<class T> void Vector<T>::SetDirection(VecDirection dir) {
+	vecd = dir;
+}
+template<class T> Vector<T>* Vector<T>::Transpose() {
+	vecd = vecd == ROW ? COL : ROW;
+	return this;
+}
+template<class T> Vector<T>* Vector<T>::ScalarAdd(Vector<T>* A, Vector<T>* B) {
+	if (A->vecd != B->vecd || A->len != B->len) {
+		printf("Error when adding two vectors: dimension not matched(%d in %d, %d in %d)\n", A->len, A->vecd, B->len, B->vecd);
+		return NULL;
+	}
+	else {
+		T* outarray = new T[A->len];
+		for (int i = 0; i < A->len; i++) {
+			outarray[i] = A->vector[i] + B->vector[i];
+		}
+		Vector<T>* out = new Vector<T>(outarray, A->len, A->vecd);
+		delete[] outarray;
+		return out;
+	}
+}
+template<class T> Vector<T>* Vector<T>::ScalarSubtract(Vector<T>* A, Vector<T>* B) {
+	if (A->vecd != B->vecd || A->len != B->len) {
+		printf("Error when subtracting two vectors: dimension not matched(%d in %d, %d in %d)\n", A->len, A->vecd, B->len, B->vecd);
+		return NULL;
+	}
+	else {
+		T* outarray = new T[A->len];
+		for (int i = 0; i < A->len; i++) {
+			outarray[i] = A->vector[i] - B->vector[i];
+		}
+		Vector<T>* out = new Vector<T>(outarray, A->len, A->vecd);
+		delete[] outarray;
+		return out;
+	}
+}
+template<class T> T Vector<T>::InnerProduct(Vector<T>* A, Vector<T>* B) {
+	if (A->len != B->len) {
+		printf("Error when innerproducting two vectors: dimension not matched(%d in %s, %d in %s)\n", A->len, A->vecd, B->len, B->vecd);
+		return NULL;
+	}
+	else {
+		T sum = 0;
+		for (int i = 0; i < A->len; i++) {
+			sum += A->vector[i] * B->vector[i];
+		}
+		return sum;
+	}
+}
+template<class T> Matrix<T>* Vector<T>::VectorSpan(Vector<T>* A, Vector<T>* B) {
+	if (A->vecd != COL || B->vecd != ROW) {
+		printf("Error when spanning two vectors: dimension not matched(%d in %d, %d in %d)\n", A->len, A->vecd, B->len, B->vecd);
+		return NULL;
+	}
+	else {
+		Matrix<T>* out = new Matrix<T>();
+		out->init(A->len, B->len);
+		int offset = 0;
+		for (int i = 0; i < A->len; i++) {
+			for (int j = 0; j < B->len; j++) {
+				out->matrix[offset] = A->vector[i] * B->vector[j];
+				offset++;
+			}
+		}
+		return out;
+	}
+}
+
+template<class T> void Vector<T>::Print(Vector<float>* A) {
+	switch (A->vecd) {
+	case COL:
+		for (int i = 0; i < A->len; i++) {
+			printf("%f\n", A->vector[i]);
+		} break;
+	case ROW:
+		for (int i = 0; i < A->len; i++) {
+			printf("%f\t", A->vector[i]);
+		} break;
+	}
+}
+template<class T> void Vector<T>::Print(Vector<int>* A) {
+	switch (A->vecd) {
+	case COL:
+		for (int i = 0; i < A->len; i++) {
+			printf("%d\n", A->vector[i]);
+		} break;
+	case ROW:
+		for (int i = 0; i < A->len; i++) {
+			printf("%d\t", A->vector[i]);
+		} break;
+	}
+}
+template<class T> void Vector<T>::Print(Vector<double>* A) {
+	switch (A->vecd) {
+	case COL:
+		for (int i = 0; i < A->len; i++) {
+			printf("%f\n", A->vector[i]);
+		} break;
+	case ROW:
+		for (int i = 0; i < A->len; i++) {
+			printf("%f\t", A->vector[i]);
+		} break;
+	}
+}
+#pragma endregion
+
+#pragma region
+// Matrix
+
+template<class T> Matrix<T>::Matrix() {};
+
+template<class T> Matrix<T>::Matrix(T* data, int h, int w) {
 	height = h;
 	width = w;
 	matrix = (T*)malloc(sizeof(T) * h * w);
@@ -17,24 +143,21 @@ Matrix<T>::Matrix(T* data, int h, int w) {
 	}
 }
 
-template<class T>
-Matrix<T>::~Matrix() {
+template<class T> Matrix<T>::~Matrix() {
 }
 
-template<class T>
-void Matrix<T>::FreeAll() {
+template<class T> void Matrix<T>::FreeAll() {
 	free(matrix);
 }
 
-template<class T>
-void Matrix<T>::init(int h, int w) {
+template<class T> void Matrix<T>::init(int h, int w) {
 	height = h;
 	width = w;
 	matrix = (T*)malloc(sizeof(T) * h * w);
 }
 
 
-void PrintMatrix(Matrix<float>* A) {
+template<class T> void Matrix<T>::Print(Matrix<float>* A) {
 	int offset = 0;
 	for (int h = 0; h < A->height; h++) {
 		for (int w = 0; w < A->width; w++) {
@@ -45,7 +168,7 @@ void PrintMatrix(Matrix<float>* A) {
 	}
 }
 
-void PrintMatrix(Matrix<int>* A) {
+template<class T> void Matrix<T>::Print(Matrix<int>* A) {
 	int offset = 0;
 	for (int h = 0; h < A->height; h++) {
 		for (int w = 0; w < A->width; w++) {
@@ -56,7 +179,7 @@ void PrintMatrix(Matrix<int>* A) {
 	}
 }
 
-void PrintMatrix(Matrix<double>* A) {
+template<class T> void Matrix<T>::Print(Matrix<double>* A) {
 	int offset = 0;
 	for (int h = 0; h < A->height; h++) {
 		for (int w = 0; w < A->width; w++) {
@@ -67,8 +190,7 @@ void PrintMatrix(Matrix<double>* A) {
 	}
 }
 
-template<typename T>
-void ScalarAdd(Matrix<T>* out, Matrix<T>* A, Matrix<T>* B) {
+template<typename T> void ScalarAdd(Matrix<T>* out, Matrix<T>* A, Matrix<T>* B) {
 	if (A->height != B->height || A->width != B->width) {
 		printf("Error when adding two matrices: dimension not matched(%d by %d, %d by %d)\n", A->height, A->width, B->height, B->width);
 		return;
@@ -83,8 +205,7 @@ void ScalarAdd(Matrix<T>* out, Matrix<T>* A, Matrix<T>* B) {
 	}
 }
 
-template<typename T>
-void ScalarSubtract(Matrix<T>* out, Matrix<T>* A, Matrix<T>* B) {
+template<typename T> void ScalarSubtract(Matrix<T>* out, Matrix<T>* A, Matrix<T>* B) {
 	if (A->height != B->height || A->width != B->width) {
 		printf("Error when substracting two matrices: dimension not matched(%d by %d, %d by %d)\n", A->height, A->width, B->height, B->width);
 		return;
@@ -99,8 +220,7 @@ void ScalarSubtract(Matrix<T>* out, Matrix<T>* A, Matrix<T>* B) {
 	}
 }
 
-template<typename T>
-void MatrixMultiply(Matrix<T>* out, Matrix<T>* A, Matrix<T>* B) {
+template<typename T> void MatrixMultiply(Matrix<T>* out, Matrix<T>* A, Matrix<T>* B) {
 	if (A->width != B->width) {
 		printf("Error when multiplying two matrices: dimension not matched(%d by %d, %d by %d)\n", A->height, A->width, B->height, B->width);
 		return;
@@ -127,8 +247,7 @@ void MatrixMultiply(Matrix<T>* out, Matrix<T>* A, Matrix<T>* B) {
 
 }
 
-template<class T, class S>
-Matrix<T>* operator*(Matrix<T> &A, S b) {
+template<class T, class S> Matrix<T>* operator*(Matrix<T> &A, S b) {
 	Matrix<T>* out = new Matrix<T>;
 	out->init(A.height, A.width);
 	int offset = 0;
@@ -141,8 +260,7 @@ Matrix<T>* operator*(Matrix<T> &A, S b) {
 	return out;
 }
 
-template<class T, class S>
-Matrix<T>* operator*(S b, Matrix<T> &A) {
+template<class T, class S> Matrix<T>* operator*(S b, Matrix<T> &A) {
 	Matrix<T>* out = new Matrix<T>;
 	out->init(A.height, A.width);
 	int offset = 0;
@@ -154,3 +272,5 @@ Matrix<T>* operator*(S b, Matrix<T> &A) {
 	}
 	return out;
 }
+
+#pragma endregion

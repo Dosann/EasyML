@@ -2,6 +2,35 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+enum VecDirection { COL, ROW };
+
+template<class T> class Vector;
+template<class T> class Matrix;
+
+template<class T>
+class Vector {
+public:
+	T* vector;
+	int len;
+	VecDirection vecd;
+
+public:
+	Vector(T* data, int l);
+	Vector(T* data, int l, VecDirection d);
+	Vector();
+	void SetDirection(VecDirection d);
+	Vector* Transpose();
+
+public:
+	static Vector* ScalarAdd(Vector* A, Vector* B);
+	static Vector* ScalarSubtract(Vector* A, Vector* B);
+	static T InnerProduct(Vector* A, Vector* B);
+	static Matrix<T>* VectorSpan(Vector* A, Vector* B);
+	static void Print(Vector<float>* A);
+	static void Print(Vector<int>* A);
+	static void Print(Vector<double>* A);
+};
+
 template<typename T>
 class Matrix {
 
@@ -18,11 +47,12 @@ public:
 	void FreeAll();
 
 	void init(int h, int w);
+public:
+	static void Print(Matrix<float>* A);
+	static void Print(Matrix<int>* A);
+	static void Print(Matrix<double>* A);
 };
 
-void PrintMatrix(Matrix<float>* A);
-
-void PrintMatrix(Matrix<int>* A);
 
 template<typename T>
 void ScalarAdd(Matrix<T>* out, Matrix<T>* A, Matrix<T>* B);
