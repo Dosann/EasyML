@@ -10,24 +10,21 @@ int main()
 	printf("开始测试矩阵运算: \n");
 	Matrix<float> A(Adata, 3, 3);
 	Matrix<float> B(Bdata, 3, 3);
-	Matrix<float> C;
 	printf("矩阵A: \n");
 	Matrix<int>::Print(&A);
 	printf("矩阵B: \n");
 	Matrix<int>::Print(&B);
-	ScalarAdd(&C, &A, &B);
 	printf("矩阵C: \n");
-	Matrix<int>::Print(&C);
+	Matrix<float>* C = Matrix<float>::ScalarAdd(&A, &B);
+	Matrix<int>::Print(C);
 
-	Matrix<float> D;
-	ScalarSubtract(&D, &A, &B);
 	printf("矩阵D: \n");
-	Matrix<int>::Print(&D);
+	Matrix<float>* D = Matrix<float>::ScalarSubtract(&A, &B);
+	Matrix<int>::Print(D);
 
-	Matrix<float> E;
-	MatrixMultiply(&E, &A, &B);
 	printf("矩阵E: \n");
-	Matrix<int>::Print(&E);
+	Matrix<float>* E = Matrix<float>::MatrixMultiply(&A, &B);
+	Matrix<int>::Print(E);
 
 	int b = 10;
 	Matrix<float>* F = A * b;
@@ -49,7 +46,7 @@ int main()
 	printf("向量vA: \n");
 	Vector<int>::Print(&vA);
 	printf("向量vB: \n");
-	Vector<int>::Print(vB.Transpose());
+	Vector<int>::Print(&vB);
 	printf("向量vC: \n");
 	Vector<int>::Print(vC);
 	printf("向量vD: \n");

@@ -1,13 +1,15 @@
 ﻿  testMatrixManipulate.cpp
-c:\my\code\easyml\easyml\include\common\linearalgebratools_imple.h(62): warning C4477: “printf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 2 拥有了类型“int”
-  c:\my\code\easyml\easyml\include\common\linearalgebratools_imple.h(60): note: 编译类 模板 成员函数“float Vector<float>::InnerProduct(Vector<float> *,Vector<float> *)”时
-  c:\my\code\easyml\easyml\include\common\testmatrixmanipulate.cpp(47): note: 参见对正在编译的函数 模板 实例化“float Vector<float>::InnerProduct(Vector<float> *,Vector<float> *)”的引用
-  c:\my\code\easyml\easyml\include\common\testmatrixmanipulate.cpp(43): note: 参见对正在编译的类 模板 实例化“Vector<float>”的引用
-c:\my\code\easyml\easyml\include\common\linearalgebratools_imple.h(62): warning C4313: “printf”: 格式字符串中的“%s”与“int”类型的参数 2 冲突
-c:\my\code\easyml\easyml\include\common\linearalgebratools_imple.h(62): warning C4477: “printf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 4 拥有了类型“int”
-c:\my\code\easyml\easyml\include\common\linearalgebratools_imple.h(62): warning C4313: “printf”: 格式字符串中的“%s”与“int”类型的参数 4 冲突
-c:\my\code\easyml\easyml\include\common\linearalgebratools_imple.h(239): warning C4244: “+=”: 从“float”转换到“int”，可能丢失数据
-  c:\my\code\easyml\easyml\include\common\testmatrixmanipulate.cpp(28): note: 参见对正在编译的函数 模板 实例化“void MatrixMultiply<float>(Matrix<float> *,Matrix<float> *,Matrix<float> *)”的引用
-c:\my\code\easyml\easyml\include\common\linearalgebratools_imple.h(243): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
-  EasyML.vcxproj -> C:\MY\code\EasyML\EasyML\x64\Debug\EasyML.exe
-  EasyML.vcxproj -> C:\MY\code\EasyML\EasyML\x64\Debug\EasyML.pdb (Full PDB)
+d:\codes\easyml\easyml\include\common\linearalgebratools_imple.h(68): warning C4477: “printf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 2 拥有了类型“int”
+  d:\codes\easyml\easyml\include\common\linearalgebratools_imple.h(66): note: 编译类 模板 成员函数“float Vector<float>::InnerProduct(Vector<float> *,Vector<float> *)”时
+  d:\codes\easyml\easyml\include\common\testmatrixmanipulate.cpp(44): note: 参见对正在编译的函数 模板 实例化“float Vector<float>::InnerProduct(Vector<float> *,Vector<float> *)”的引用
+  d:\codes\easyml\easyml\include\common\testmatrixmanipulate.cpp(40): note: 参见对正在编译的类 模板 实例化“Vector<float>”的引用
+d:\codes\easyml\easyml\include\common\linearalgebratools_imple.h(68): warning C4313: “printf”: 格式字符串中的“%s”与“int”类型的参数 2 冲突
+d:\codes\easyml\easyml\include\common\linearalgebratools_imple.h(68): warning C4477: “printf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 4 拥有了类型“int”
+d:\codes\easyml\easyml\include\common\linearalgebratools_imple.h(68): warning C4313: “printf”: 格式字符串中的“%s”与“int”类型的参数 4 冲突
+d:\codes\easyml\easyml\include\common\linearalgebratools_imple.h(253): warning C4244: “+=”: 从“float”转换到“int”，可能丢失数据
+  d:\codes\easyml\easyml\include\common\linearalgebratools_imple.h(236): note: 编译类 模板 成员函数“Matrix<float> *Matrix<float>::MatrixMultiply(Matrix<float> *,Matrix<float> *)”时
+  d:\codes\easyml\easyml\include\common\testmatrixmanipulate.cpp(26): note: 参见对正在编译的函数 模板 实例化“Matrix<float> *Matrix<float>::MatrixMultiply(Matrix<float> *,Matrix<float> *)”的引用
+  d:\codes\easyml\easyml\include\common\testmatrixmanipulate.cpp(11): note: 参见对正在编译的类 模板 实例化“Matrix<float>”的引用
+d:\codes\easyml\easyml\include\common\linearalgebratools_imple.h(257): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+  EasyML.vcxproj -> D:\Codes\EasyML\EasyML\x64\Debug\EasyML.exe
+  EasyML.vcxproj -> D:\Codes\EasyML\EasyML\x64\Debug\EasyML.pdb (Full PDB)

@@ -19,7 +19,7 @@ public:
 	Vector(T* data, int l, VecDirection d);
 	Vector();
 	void SetDirection(VecDirection d);
-	Vector* Transpose();
+	Vector* Transpose(bool inplace = false);
 
 public:
 	static Vector* ScalarAdd(Vector* A, Vector* B);
@@ -51,17 +51,12 @@ public:
 	static void Print(Matrix<float>* A);
 	static void Print(Matrix<int>* A);
 	static void Print(Matrix<double>* A);
+	static Matrix* ScalarAdd(Matrix* A, Matrix* B);
+	static Matrix* ScalarSubtract(Matrix* A, Matrix* B);
+	static Matrix* MatrixMultiply(Matrix* A, Matrix* B);
 };
 
 
-template<typename T>
-void ScalarAdd(Matrix<T>* out, Matrix<T>* A, Matrix<T>* B);
-
-template<typename T>
-void ScalarSubtract(Matrix<T>* out, Matrix<T>* A, Matrix<T>* B);
-
-template<typename T>
-void MatrixMultiply(Matrix<T>* out, Matrix<T>* A, Matrix<T>* B);
 
 template<class T, class S>
 Matrix<T>* operator*(Matrix<T> &A, S b);

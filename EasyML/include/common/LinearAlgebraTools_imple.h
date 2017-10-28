@@ -23,9 +23,15 @@ template<class T> Vector<T>::Vector(T* data, int l, VecDirection dir) {
 template<class T> void Vector<T>::SetDirection(VecDirection dir) {
 	vecd = dir;
 }
-template<class T> Vector<T>* Vector<T>::Transpose() {
-	vecd = vecd == ROW ? COL : ROW;
-	return this;
+template<class T> Vector<T>* Vector<T>::Transpose(bool inplace = false) {
+	if (inplace) {
+		vecd = vecd == ROW ? COL : ROW;
+		return this;
+	}
+	else {
+		Vector<T>* out = new Vector<T>(vector, len, vecd == ROW ? COL : ROW);
+		return out;
+	}
 }
 template<class T> Vector<T>* Vector<T>::ScalarAdd(Vector<T>* A, Vector<T>* B) {
 	if (A->vecd != B->vecd || A->len != B->len) {
@@ -98,7 +104,7 @@ template<class T> void Vector<T>::Print(Vector<float>* A) {
 	case ROW:
 		for (int i = 0; i < A->len; i++) {
 			printf("%f\t", A->vector[i]);
-		} break;
+		} printf("\n"); break;
 	}
 }
 template<class T> void Vector<T>::Print(Vector<int>* A) {
@@ -110,7 +116,7 @@ template<class T> void Vector<T>::Print(Vector<int>* A) {
 	case ROW:
 		for (int i = 0; i < A->len; i++) {
 			printf("%d\t", A->vector[i]);
-		} break;
+		} printf("\n"); break;
 	}
 }
 template<class T> void Vector<T>::Print(Vector<double>* A) {
@@ -122,7 +128,7 @@ template<class T> void Vector<T>::Print(Vector<double>* A) {
 	case ROW:
 		for (int i = 0; i < A->len; i++) {
 			printf("%f\t", A->vector[i]);
-		} break;
+		} printf("\n"); break;
 	}
 }
 #pragma endregion
@@ -130,7 +136,10 @@ template<class T> void Vector<T>::Print(Vector<double>* A) {
 #pragma region
 // Matrix
 
-template<class T> Matrix<T>::Matrix() {};
+template<class T> Matrix<T>::Matrix() {
+	height = 0;
+	width = 0;
+};
 
 template<class T> Matrix<T>::Matrix(T* data, int h, int w) {
 	height = h;
@@ -190,11 +199,12 @@ template<class T> void Matrix<T>::Print(Matrix<double>* A) {
 	}
 }
 
-template<typename T> void ScalarAdd(Matrix<T>* out, Matrix<T>* A, Matrix<T>* B) {
+template<class T> Matrix<T>* Matrix<T>::ScalarAdd(Matrix<T>* A, Matrix<T>* B) {
 	if (A->height != B->height || A->width != B->width) {
 		printf("Error when adding two matrices: dimension not matched(%d by %d, %d by %d)\n", A->height, A->width, B->height, B->width);
-		return;
+		return NULL;
 	}
+	Matrix<T>* out = new Matrix<T>();
 	out->init(A->height, A->width);
 	int offset = 0;
 	for (int h = 0; h < A->height; h++) {
@@ -203,13 +213,15 @@ template<typename T> void ScalarAdd(Matrix<T>* out, Matrix<T>* A, Matrix<T>* B) 
 			offset++;
 		}
 	}
+	return out;
 }
 
-template<typename T> void ScalarSubtract(Matrix<T>* out, Matrix<T>* A, Matrix<T>* B) {
+template<class T> Matrix<T>* Matrix<T>::ScalarSubtract(Matrix<T>* A, Matrix<T>* B) {
 	if (A->height != B->height || A->width != B->width) {
 		printf("Error when substracting two matrices: dimension not matched(%d by %d, %d by %d)\n", A->height, A->width, B->height, B->width);
-		return;
+		return NULL;
 	}
+	Matrix<T>* out = new Matrix<T>();
 	out->init(A->height, A->width);
 	int offset = 0;
 	for (int h = 0; h < A->height; h++) {
@@ -218,13 +230,15 @@ template<typename T> void ScalarSubtract(Matrix<T>* out, Matrix<T>* A, Matrix<T>
 			offset++;
 		}
 	}
+	return out;
 }
 
-template<typename T> void MatrixMultiply(Matrix<T>* out, Matrix<T>* A, Matrix<T>* B) {
+template<typename T> Matrix<T>* Matrix<T>::MatrixMultiply(Matrix<T>* A, Matrix<T>* B) {
 	if (A->width != B->width) {
 		printf("Error when multiplying two matrices: dimension not matched(%d by %d, %d by %d)\n", A->height, A->width, B->height, B->width);
-		return;
+		return NULL;
 	}
+	Matrix<T>* out = new Matrix<T>();
 	out->init(A->height, B->width);
 	int sum = 0;
 	int offset = 0;
@@ -244,7 +258,7 @@ template<typename T> void MatrixMultiply(Matrix<T>* out, Matrix<T>* A, Matrix<T>
 			offset += 1;
 		}
 	}
-
+	return out;
 }
 
 template<class T, class S> Matrix<T>* operator*(Matrix<T> &A, S b) {
